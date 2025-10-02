@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import User from "./model/users.js";
+
 dotenv.config();
 app.use(express.json());
 
@@ -23,3 +23,4 @@ const startServer = async () => {
   });
 };
 startServer();
+

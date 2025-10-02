@@ -6,6 +6,14 @@ const userSchema = new mongoose.Schema({
     email: {type:String, required:true, unique: true}
 })
 
-const User = mongoose.model('User', userSchema)
+const subSchema = new mongoose.Schema({
+    userName: {type: String, required: true},
+    name: {type: String, required: true},
+    price: {type: Number, required: true},
+    renewalDate: {type: Date, required: true}
+})
 
-export default User
+const User = mongoose.model('User', userSchema)
+const Subscription = mongoose.model('Subscription', subSchema)
+
+export {User, Subscription} 
