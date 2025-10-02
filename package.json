@@ -1,0 +1,26 @@
+{
+  "name": "subs-manager",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushhkrr/Subs-Manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayushhkrr/Subs-Manager/issues"
+  },
+  "homepage": "https://github.com/ayushhkrr/Subs-Manager#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.3"
+  }
+}
