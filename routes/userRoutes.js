@@ -1,8 +1,9 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
-import { User, Subscription } from "./model/users.js";
-import protect from './middleware/auth.js'
+import { User, Subscription } from "../model/users.js";
+import protect from '../middleware/auth.js'
+
 const routes = express.Router();
 
 routes.post("/register", async (req, res) => {
@@ -126,3 +127,5 @@ routes.delete('/deleteuser/:id', protect, async(req, res)=>{
     res.status(400).json('Bad request')
   }
 })
+
+export default routes
