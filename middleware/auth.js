@@ -6,8 +6,8 @@ const protect = async(req, res, next)=>{
     const token = req.headers.authorization
     
     try{
-        if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
-            const auth = req.headers.authorization.split(' ')[1]
+        if(token && token.startsWith('Bearer ')){
+            const auth = token.split(' ')[1]
             const userVerification = jwt.verify(auth, process.env.SECRET_KEY)
             req.user = userVerification
             next()

@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
 
 const subSchema = new mongoose.Schema({
     userName: {type: String, required: true},
-    name: {type: String, required: true},
+    userId: {type:mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    plan: {type: String, required: true},
     price: {type: Number, required: true},
     renewalDate: {type: Date, required: true}
 })

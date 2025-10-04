@@ -1,11 +1,15 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
+import routes from './routes.js'
+
 
 dotenv.config();
-app.use(express.json());
 
 const app = express();
+app.use(express.json());
+app.use(routes)
+
 const PORT = process.env.PORT || 5000;
 const connectdb = async () => {
   try {
