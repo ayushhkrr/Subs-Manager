@@ -111,13 +111,13 @@ routes.post("/login", async (req, res) => {
   }
 });
 
-routes.delete('/deleteuser/:id', protect, async(req, res)=>{
+routes.delete('/deleteUser/:id', protect, async(req, res)=>{
   try{
       const user = await User.findById(req.params.id)
       if(user._id.toString() === req.user.id){
         const deleteUser = await User.findByIdAndDelete(req.params.id)
         const allSubDelete = await Subscription.deleteMany({userId: deleteUser._id})
-        const subText = allSubDelete.deletedCount === 1 ? 'subscription' : 'subscriptions'
+        const subText =allSubDelete.deletedCount === 0 || allSubDelete.deletedCount === 1 ? 'subscription' : 'subscriptions'
         res.status(200).json(`User ${deleteUser.username} and all their ${allSubDelete.deletedCount} ${subText} have been deleted`)
       }else{
         res.status(404).json('User not found')
