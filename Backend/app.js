@@ -11,8 +11,8 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 // app.use(cors())
-app.use(userRoutes);
-app.use(subsRoutes);
+app.use('/api/users',userRoutes);
+app.use('/api/subscription',subsRoutes);
 
 const PORT = process.env.PORT || 5000;
 const connectdb = async () => {

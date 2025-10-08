@@ -5,12 +5,8 @@ export const getSubscription = async (req, res) => {
     const subDetails = await Subscription.find({
       userId: req.user.id,
     });
-    const foundUser = await User.findById(req.user.id);
-    if (foundUser.username === req.params.username) {
       res.status(200).json(subDetails);
-    } else {
-      res.status(401).json("User not authorized");
-    }
+    
   } catch (err) {
     console.error(err);
     res.status(400).json("Bad request");

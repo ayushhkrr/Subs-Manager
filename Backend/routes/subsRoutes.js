@@ -10,7 +10,7 @@ import protect from "../middleware/auth.js";
 
 const routes = express.Router();
 
-routes.get("/subscriptions/:username", protect, getSubscription);
+routes.get("/subscriptions", protect, getSubscription);
 
 routes.post("/subscriptions", protect, postSubscription);
 
