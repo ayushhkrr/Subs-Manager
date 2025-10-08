@@ -1,5 +1,5 @@
 import express from "express";
-import { registerUser, loginUser, deleteUser } from '../controllers/userControllers.js';
+import { registerUser, loginUser, deleteUser } from '../controllers/userController.js';
 
 import protect from "../middleware/auth.js";
 

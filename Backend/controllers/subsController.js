@@ -3,7 +3,7 @@ import { User, Subscription } from "../model/allSchemas.js";
 export const getSubscription = async (req, res) => {
   try {
     const subDetails = await Subscription.find({
-      userName: req.params.username,
+      userId: req.user.id,
     });
     const foundUser = await User.findById(req.user.id);
     if (foundUser.username === req.params.username) {
