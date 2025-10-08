@@ -14,15 +14,8 @@ routes.post("/register", async (req, res) => {
     user.password = hashPswd;
     await user.save();
     const token = jwt.sign({id: user._id,},process.env.SECRET_KEY, {expiresIn: '1h'})
-    // res.status(201).json(`User Registered, ${token}`);
-    res.status(201).json({
-    message: 'User Registered',
-    token: token,
-    user: {
-        id: user._id,
-        username: user.username
-    }
-});
+    res.status(201).json(`User Registered, ${token}`);
+   
   } catch (err) {
     console.log(err);
     res.status(400).json("Bad request");
@@ -106,15 +99,8 @@ routes.post("/login", async (req, res) => {
     if (userLogin) {
       if (await bcrypt.compare(password, userLogin.password)) {
         const token= jwt.sign({id: userLogin._id}, process.env.SECRET_KEY)
-        // res.status(200).json({message: 'User logged in', token });
-        res.status(200).json({
-    message: 'User logged in',
-    token: token,
-    user: {
-        id: userLogin._id,
-        username: userLogin.username
-    }
-});
+        res.status(200).json({message: 'User logged in', token });
+     
       } else {
         res.status(404).json("User data not found");
       }
