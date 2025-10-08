@@ -5,7 +5,7 @@ import {
   postSubscription,
   updateSubscription,
   deleteSubscription,
-} from "subsController";
+} from '../controllers/subsController.js';
 import protect from "../middleware/auth.js";
 
 const routes = express.Router();

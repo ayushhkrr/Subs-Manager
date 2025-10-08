@@ -1,16 +1,15 @@
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import routes from './routes/userRoutes.js'
+import routes from "./routes/userRoutes.js";
 // import cors from 'cors'
-
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 // app.use(cors())
-app.use(routes)
+app.use(routes);
 
 const PORT = process.env.PORT || 5000;
 const connectdb = async () => {
@@ -29,4 +28,3 @@ const startServer = async () => {
   });
 };
 startServer();
-

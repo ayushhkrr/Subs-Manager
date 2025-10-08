@@ -1,4 +1,4 @@
-import { User, Subscription } from "../model/users.js";
+import { User, Subscription } from "../model/allSchemas.js";
 
 export const getSubscription = async (req, res) => {
   try {
