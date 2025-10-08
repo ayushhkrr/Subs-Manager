@@ -16,7 +16,7 @@ A robust RESTful API built with Node.js, Express, and MongoDB to manage user acc
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB with Mongoose ODM
 - **Authentication**: JSON Web Token (jsonwebtoken), bcrypt
-- **Middleware**: CORS, Custom Auth Middleware
+- **Middleware**: Custom Auth Middleware
 - **Environment Variables**: dotenv
 
 ## Getting Started
