@@ -3,7 +3,13 @@ import mongoose from 'mongoose'
 const userSchema = new mongoose.Schema({
     username:{type: String, required: true, unique: true},
     password: {type:String, required:true},
-    email: {type:String, required:true, unique: true, match: [/.+\@.+\..+/, 'Please enter a valid email address']}
+    email: {type:String, required:true, unique: true, match: [/.+\@.+\..+/, 'Please enter a valid email address']},
+    subscriptionStatus: {
+        type: String,
+        enum: ['free', 'premium'],
+        default: 'free'
+    },
+    stripeCustomerId: {type: String}
 })
 
 const subSchema = new mongoose.Schema({

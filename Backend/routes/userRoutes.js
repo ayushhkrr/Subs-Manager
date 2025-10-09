@@ -1,5 +1,11 @@
 import express from "express";
-import { registerUser, loginUser, deleteUser } from '../controllers/userController.js';
+
+import {
+  registerUser,
+  loginUser,
+  deleteUser,
+  stripePaywall,
+} from "../controllers/userController.js";
 
 import protect from "../middleware/auth.js";
 
@@ -9,6 +15,8 @@ routes.post("/register", registerUser);
 
 routes.post("/login", loginUser);
 
-routes.delete("/deleteUser/:id", protect, deleteUser);
+routes.post("/payment-gateway", protect, stripePaywall);
+
+routes.delete("/:id", protect, deleteUser);
 
 export default routes;

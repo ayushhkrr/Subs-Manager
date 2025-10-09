@@ -10,12 +10,12 @@ import protect from "../middleware/auth.js";
 
 const routes = express.Router();
 
-routes.get("/subscriptions", protect, getSubscription);
+routes.get("/", protect, getSubscription);
 
-routes.post("/subscriptions", protect, postSubscription);
+routes.post("/", protect, postSubscription);
 
-routes.patch("/subscriptions/:id", protect, updateSubscription);
+routes.patch("/:id", protect, updateSubscription);
 
-routes.delete("/subscriptions/:id", protect, deleteSubscription);
+routes.delete("/:id", protect, deleteSubscription);
 
 export default routes;
