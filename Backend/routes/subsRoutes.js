@@ -5,6 +5,7 @@ import {
   postSubscription,
   updateSubscription,
   deleteSubscription,
+  subsDashboard
 } from '../controllers/subsController.js';
 import protect from "../middleware/auth.js";
 
@@ -17,5 +18,7 @@ routes.post("/", protect, postSubscription);
 routes.patch("/:id", protect, updateSubscription);
 
 routes.delete("/:id", protect, deleteSubscription);
+
+routes.get('/summary', protect, subsDashboard)
 
 export default routes;

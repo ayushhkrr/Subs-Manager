@@ -1,4 +1,5 @@
 import { User, Subscription } from "../model/allSchemas.js";
+import mongoose from 'mongoose'
 
 export const getSubscription = async (req, res) => {
   try {
@@ -67,3 +68,26 @@ export const deleteSubscription = async (req, res) => {
     res.status(400).json("Bad request");
   }
 };
+
+export const subsDashboard = async(req, res)=>{
+  try{
+    const userId = new mongoose.Schema.Types.ObjectId(req.user.id)
+    const summary = await Subscription.aggregate([
+      {$match: {userId}},
+
+      {$group: {
+        _id: null,
+        totalMonthlyCost: {$sum: '$price'},
+        totalSubscription: {$sum: 1}
+      }}
+    ])
+    if(summary.length> 0){
+      res.status(200).json(summary[0])
+    }else{
+      res.status(200).json({totalMonthlyCost: 0, totalSubscription: 0})
+    }
+  }catch(e){
+    console.error(e)
+    res.status(500).json('Server Error')
+  }
+}
