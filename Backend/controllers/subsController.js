@@ -71,20 +71,21 @@ export const deleteSubscription = async (req, res) => {
 
 export const subsDashboard = async(req, res)=>{
   try{
-    const userId = new mongoose.Schema.Types.ObjectId(req.user.id)
+    const userId = new mongoose.Types.ObjectId(req.user.id)
     const summary = await Subscription.aggregate([
       {$match: {userId}},
 
       {$group: {
         _id: null,
         totalMonthlyCost: {$sum: '$price'},
-        totalSubscription: {$sum: 1}
+        totalSubscription: {$sum: 1},
+        planNames: {$push: '$plan'}
       }}
     ])
     if(summary.length> 0){
       res.status(200).json(summary[0])
     }else{
-      res.status(200).json({totalMonthlyCost: 0, totalSubscription: 0})
+      res.status(200).json({totalMonthlyCost: 0, totalSubscription: 0, planNames: []})
     }
   }catch(e){
     console.error(e)
