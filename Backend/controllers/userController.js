@@ -17,6 +17,7 @@ export const registerUser = async (req, res) => {
 
     const hashPswd = await bcrypt.hash(password, 10);
     const user = new User({
+      fullName: fullName,
       username: username,
       email: email,
       password: hashPswd,
@@ -25,7 +26,14 @@ export const registerUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
-    res.status(201).json(`User Registered, ${token}`);
+    res.status(201).json({
+    message: "User Registered",
+    token: token,
+    user: {
+        id: user._id,
+        username: user.username
+    }
+});
   } catch (err) {
     console.log(err);
     res.status(400).json("Bad request");
