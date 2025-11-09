@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { Subscription } from "../model/allSchemas.js";
+import { Subscription, User } from "../model/allSchemas.js";
 
 const subsChecker = async () => {
   const reminderDate = new Date();
@@ -8,7 +8,7 @@ const subsChecker = async () => {
   startOfDay.setHours(0, 0, 0, 0);
   const endOfDay = new Date(reminderDate);
   endOfDay.setHours(23, 59, 59, 999);
-
+   
   const renewal = await Subscription.find({renewalDate:{$gte: startOfDay, $lte: endOfDay}}).populate('userId', 'email')
   if (renewal.length === 0){
       console.log('There is nothing to remind today')

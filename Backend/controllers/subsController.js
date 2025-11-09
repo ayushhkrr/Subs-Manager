@@ -36,6 +36,9 @@ export const postSubscription = async (req, res) => {
 export const updateSubscription = async (req, res) => {
   try {
     const userData = await Subscription.findById(req.params.id);
+    if(!userData){
+      return res.status(404).json('User not found')
+    }
     if (userData.userId.toString() === req.user.id) {
       const updateData = req.body;
       const user = await Subscription.findByIdAndUpdate(
@@ -55,6 +58,9 @@ export const updateSubscription = async (req, res) => {
 export const deleteSubscription = async (req, res) => {
   try {
     const userSubscription = await Subscription.findById(req.params.id);
+    if(!userSubscription){
+      return res.status(404).json('Subscription not found')
+    }
     if (userSubscription.userId.toString() === req.user.id) {
       const subDelete = await Subscription.findByIdAndDelete(req.params.id);
       res

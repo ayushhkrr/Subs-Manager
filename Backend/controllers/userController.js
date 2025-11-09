@@ -8,7 +8,7 @@ dotenv.config()
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, fullName } = req.body;
   try {
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
@@ -64,6 +64,9 @@ export const loginUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+    if(!user){
+      return res.status(404).json('User not found')
+    }
     if (user._id.toString() === req.user.id) {
       const deleteUser = await User.findByIdAndDelete(req.params.id);
       const allSubDelete = await Subscription.deleteMany({
@@ -99,7 +102,7 @@ export const stripePaywall = async (req, res) => {
         email: user.email,
         name: user.username,
       });
-      stripeCustomerId = customer.id;
+      user.stripeCustomerId = customer.id;
       await user.save();
     }
 
