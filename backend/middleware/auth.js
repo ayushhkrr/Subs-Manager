@@ -10,7 +10,7 @@ const protect = async (req, res, next) => {
       req.user = userVerification;
       next();
     } else {
-      res.status(401).json({ message: "Unauthorized user" });
+      res.status(401).json({ message: "Unauthorized user or Invalid token" });
     }
   } catch (err) {
     console.error(err);

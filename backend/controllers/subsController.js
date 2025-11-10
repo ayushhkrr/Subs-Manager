@@ -25,6 +25,11 @@ export const postSubscription = async (req, res) => {
       renewalDate: renewalDate,
       userId: req.user.id,
     });
+
+    if (!plan || !price || !renewalDate) {
+  return res.status(400).json("All fields are required");
+}
+
     await newSubscription.save();
     res.status(201).json("Subscription Added Succesfully");
   } catch (err) {
@@ -37,13 +42,14 @@ export const updateSubscription = async (req, res) => {
   try {
     const userData = await Subscription.findById(req.params.id);
     if(!userData){
-      return res.status(404).json('User not found')
+      return res.status(404).json('Subscription not found')
     }
     if (userData.userId.toString() === req.user.id) {
       const updateData = req.body;
       const user = await Subscription.findByIdAndUpdate(
         req.params.id,
-        updateData
+        updateData,
+        {new: true}
       );
       res.status(200).json("Subscription Updated");
     } else {
