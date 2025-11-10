@@ -1,5 +1,9 @@
 import cron from "node-cron";
+import sgMail from "@sendgrid/mail";
 import { Subscription } from "../model/allSchemas.js";
+import { reminderTemplate } from "../emailTemplate/reminderTemplate.js";
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const subsChecker = async () => {
   try {
@@ -12,14 +16,27 @@ const subsChecker = async () => {
 
     const renewal = await Subscription.find({
       renewalDate: { $gte: startOfDay, $lte: endOfDay },
-    }).populate("userId", "email");
+    }).populate("userId", "email username",);
     if (renewal.length === 0) {
       console.log("There is nothing to remind today");
     } else {
       for (const subscription of renewal) {
-        console.log({
-          Reminder: `The ${subscription.plan} subscription for user ${subscription.userId.email} is renewing in 3 days.`,
-        });
+        const to = subscription.userId.email;
+        const plan = subscription.plan;
+        const renewalDate = subscription.renewalDate;
+
+        try {
+          await sgMail.send({
+            to,
+            from: process.env.FROM_EMAIL,
+            subject: `Reminder: Your ${plan} subscription renews soon`,
+            html: reminderTemplate(subscription.userId.username, plan, renewalDate),
+          });
+
+          console.log(`✅ Email sent to ${to} for plan: ${plan}`);
+        } catch (err) {
+          console.error(`❌ Failed to send email to ${to}:`, err.message);
+        }
       }
     }
   } catch (e) {
