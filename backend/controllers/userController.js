@@ -2,8 +2,8 @@ import { User, Subscription } from "../model/allSchemas.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Stripe from "stripe";
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -27,13 +27,13 @@ export const registerUser = async (req, res) => {
       expiresIn: "1h",
     });
     res.status(201).json({
-    message: "User Registered",
-    token: token,
-    user: {
+      message: "User Registered",
+      token: token,
+      user: {
         id: user._id,
-        username: user.username
-    }
-});
+        username: user.username,
+      },
+    });
   } catch (err) {
     console.log(err);
     res.status(400).json("Bad request");
@@ -47,7 +47,9 @@ export const loginUser = async (req, res) => {
 
     if (userLogin) {
       if (await bcrypt.compare(password, userLogin.password)) {
-        const token = jwt.sign({ id: userLogin._id }, process.env.SECRET_KEY);
+        const token = jwt.sign({ id: userLogin._id }, process.env.SECRET_KEY, {
+          expiresIn: "1h",
+        });
         res.status(200).json({ message: "User logged in", token });
       } else {
         res.status(404).json("User data not found");
@@ -64,8 +66,8 @@ export const loginUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    if(!user){
-      return res.status(404).json('User not found')
+    if (!user) {
+      return res.status(404).json("User not found");
     }
     if (user._id.toString() === req.user.id) {
       const deleteUser = await User.findByIdAndDelete(req.params.id);
@@ -103,6 +105,7 @@ export const stripePaywall = async (req, res) => {
         name: user.username,
       });
       user.stripeCustomerId = customer.id;
+      stripeCustomerId = customer.id;
       await user.save();
     }
 
@@ -112,12 +115,12 @@ export const stripePaywall = async (req, res) => {
       customer: stripeCustomerId,
       line_items: [
         {
-          price: "price_1SGIH8DTsE8szgZ0UtavTRau",
+          price: process.env.STRIPE_PRICE_ID,
           quantity: 1,
         },
       ],
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: process.env.SUCCESS_URL,
+      cancel_url: process.env.CANCEL_URL,
     });
     res.status(200).json({ url: session.url });
   } catch (e) {

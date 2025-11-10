@@ -67,7 +67,7 @@ export const deleteSubscription = async (req, res) => {
         .status(200)
         .json(`Subscription ${subDelete.plan} succesfully deleted`);
     } else {
-      res.status(404).json("Unauthorized request");
+      res.status(401).json("Unauthorized request");
     }
   } catch (err) {
     console.error(err);
