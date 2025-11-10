@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { Subscription } from "../model/allSchemas.js";
+import { Subscription } from "../backend/model/allSchemas.js";
 
 const subsChecker = async () => {
   try {
