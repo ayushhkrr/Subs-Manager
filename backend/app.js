@@ -4,7 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import subsRoutes from "./routes/subsRoutes.js";
-import {startReminder} from '../Backend/jobs/reminderJob.js'
+import {startReminder} from './jobs/reminderJob.js'
 
 import cors from 'cors'
 
