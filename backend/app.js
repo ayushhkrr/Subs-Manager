@@ -6,14 +6,10 @@ import userRoutes from "./routes/userRoutes.js";
 import subsRoutes from "./routes/subsRoutes.js";
 import { startReminder } from './jobs/reminderJob.js';
 import cors from 'cors';
-import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
 // Initialize Express app
 const app = express();
-
-// Security Middleware
-app.use(helmet()); // Adds security headers
 
 // CORS Configuration - restrict to specific origin in production
 const corsOptions = {
