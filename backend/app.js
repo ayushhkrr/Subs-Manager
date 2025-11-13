@@ -7,6 +7,7 @@ import subsRoutes from "./routes/subsRoutes.js";
 import { startReminder } from './jobs/reminderJob.js';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
+import { handleStripeWebhook } from "./controllers/orderController.js";
 
 // Initialize Express app
 const app = express();
@@ -35,6 +36,12 @@ const generalLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+
+app.post(
+  '/api/webhook',
+  express.raw({type: 'application.json'}),
+  handleStripeWebhook
+)
 
 // Body parser middleware
 app.use(express.json());
