@@ -39,7 +39,7 @@ const generalLimiter = rateLimit({
 
 app.post(
   '/api/webhook',
-  express.raw({type: 'application.json'}),
+  express.raw({type: 'application/json'}),
   handleStripeWebhook
 )
 
