@@ -23,9 +23,6 @@ A robust RESTful API backend service for managing user subscriptions with automa
 
 **Subs-Manager** is a production-ready backend API that helps users track and manage their recurring subscriptions (Netflix, Spotify, etc.). It features secure JWT authentication, automated email reminders 3 days before renewal dates, Stripe payment integration for premium features, and comprehensive subscription management.
 
-**Live Demo:** [Add your deployed URL here]
-
-**Frontend Repository:** [Add frontend repo link if available]
 
 ## ✨ Features
 
@@ -294,8 +291,5 @@ Contributions, issues, and feature requests are welcome!
 
 ## 📧 Support
 
-For support, email your-email@example.com or open an issue on GitHub.
+For support, email ayushhkrr@gmail.com or open an issue on GitHub.
 
----
-
-**Note**: This is a backend-only project. A frontend application is required to fully utilize all features. The API is designed to be consumed by a React, Vue, or any other frontend framework.
