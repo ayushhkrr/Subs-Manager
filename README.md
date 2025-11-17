@@ -74,7 +74,6 @@ A robust RESTful API backend service for managing user subscriptions with automa
 ### Authentication & Security
 - **JSON Web Token (jsonwebtoken v9.0.2)** - Token-based auth
 - **bcrypt v6.0.0** - Password hashing
-- **Helmet v8.1.0** - Security headers
 - **express-rate-limit v8.2.1** - Rate limiting
 
 ### Payment & Email Services
