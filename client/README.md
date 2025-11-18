@@ -1,16 +1,84 @@
-# React + Vite
+# SubsManager Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern, minimal React application for managing subscriptions.
 
-Currently, two official plugins are available:
+## Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Install Dependencies
+```bash
+npm install
+```
 
-## React Compiler
+### Run Development Server
+```bash
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The app will be available at `http://localhost:5173`
 
-## Expanding the ESLint configuration
+### Build for Production
+```bash
+npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Important Configuration
+
+Make sure your backend is running at `http://localhost:5000`
+
+If you need to change the API URL, edit `client/src/services/api.js`:
+
+```js
+const API_URL = 'http://localhost:5000/api';
+```
+
+## Features
+
+- User registration and authentication
+- Dashboard with subscription management
+- Add, edit, and delete subscriptions
+- View total monthly costs
+- Responsive design (mobile-friendly)
+
+## Tech Stack
+
+- React 19
+- React Router 7
+- Tailwind CSS 4
+- Axios
+- Vite
+
+## Project Structure
+
+```
+src/
+├── components/       # Reusable components
+├── context/         # Global state (Auth)
+├── pages/           # Page components
+├── services/        # API calls
+├── App.jsx          # Main app with routing
+└── main.jsx         # Entry point
+```
+
+## Complete Documentation
+
+See [FRONTEND_GUIDE.md](../FRONTEND_GUIDE.md) for comprehensive documentation explaining:
+- How React works
+- Detailed explanation of every file
+- How to make changes
+- Common issues and solutions
+
+Perfect for React beginners!
+
+## Pages
+
+- `/` - Landing page
+- `/register` - Sign up
+- `/login` - Sign in
+- `/dashboard` - Main app (protected)
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
