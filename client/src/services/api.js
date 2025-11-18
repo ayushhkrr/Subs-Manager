@@ -23,6 +23,7 @@ api.interceptors.request.use((config) => {
 export const userAPI = {
   register: (data) => api.post('/users/register', data),
   login: (data) => api.post('/users/login', data),
+  getCurrentUser: () => api.get('/users/me'),
   deleteAccount: (id) => api.delete(`/users/${id}`),
   createPayment: () => api.post('/users/payment-gateway'),
 };

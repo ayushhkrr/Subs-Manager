@@ -1,10 +1,14 @@
 import mongoose from 'mongoose'
+import validator from 'email-validator'
 
 const userSchema = new mongoose.Schema({
     fullName : {type: String, required: true},
     username:{type: String, required: true, unique: true},
     password: {type:String, required:true},
-    email: {type:String, required:true, unique: true, match: [/.+\@.+\..+/, 'Please enter a valid email address']},
+    email: {type:String, required:true, unique: true, trim: true,   validate: {
+      validator: (value) => validator.validate(value),
+      message: "Please enter a valid email address"
+    }},
     subscriptionStatus: {
         type: String,
         enum: ['free', 'premium'],
@@ -14,11 +18,10 @@ const userSchema = new mongoose.Schema({
 })
 
 const subSchema = new mongoose.Schema({
-    userName: {type: String, required: true},
     userId: {type:mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     plan: {type: String, required: true},
     price: {type: Number, required: true},
-    currency: {type: String, required: true, default: 'USD'},
+    currency: {type: String, default: 'USD'},
     renewalDate: {type: Date, required: true}
 })
 

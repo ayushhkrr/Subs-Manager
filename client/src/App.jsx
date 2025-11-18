@@ -6,6 +6,8 @@ import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Success from './pages/Success';
+import Cancel from './pages/Cancel';
 
 function AppRoutes() {
   const { user } = useAuth();
@@ -22,6 +24,22 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/success"
+          element={
+            <ProtectedRoute>
+              <Success />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cancel"
+          element={
+            <ProtectedRoute>
+              <Cancel />
             </ProtectedRoute>
           }
         />

@@ -50,6 +50,9 @@ export const registerUser = async (req, res) => {
       user: {
         id: user._id,
         username: user.username,
+        fullName: user.fullName,
+        email: user.email,
+        subscriptionStatus: user.subscriptionStatus || 'free',
       },
     });
   } catch (err) {
@@ -86,7 +89,9 @@ export const loginUser = async (req, res) => {
       user: {
         id: userLogin._id,
         username: userLogin.username,
-        email: userLogin.email
+        fullName: userLogin.fullName,
+        email: userLogin.email,
+        subscriptionStatus: userLogin.subscriptionStatus || 'free',
       }
     });
   } catch (err) {
@@ -126,6 +131,28 @@ export const deleteUser = async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({
+      user: {
+        id: user._id,
+        username: user.username,
+        fullName: user.fullName,
+        email: user.email,
+        subscriptionStatus: user.subscriptionStatus || 'free',
+      }
+    });
+  } catch (e) {
+    console.error(e.message);
+    res.status(500).json({ error: "Server error" });
   }
 };
 

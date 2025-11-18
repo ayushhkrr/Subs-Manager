@@ -1,6 +1,6 @@
 # 🚀 Subs-Manager
 
-A robust RESTful API backend service for managing user subscriptions with automated renewal reminders and payment processing.
+A full-stack subscription management application with React frontend, Node.js backend, automated renewal reminders, and Stripe payment integration.
 
 ![Node.js](https://img.shields.io/badge/Node.js-v18+-green)
 ![Express](https://img.shields.io/badge/Express-v5.1.0-blue)
@@ -46,11 +46,14 @@ A robust RESTful API backend service for managing user subscriptions with automa
 - ✅ Professional HTML email templates
 - ✅ SendGrid integration for reliable delivery
 
-### Payment Processing
-- ✅ Stripe checkout integration
-- ✅ Subscription-based payment flow
-- ✅ Automatic customer creation
-- ✅ Test mode support for development
+### Premium Features & Payment Processing
+- ✅ Stripe checkout integration for premium upgrades
+- ✅ Automatic user status updates via webhooks
+- ✅ Premium badge display for paying users
+- ✅ Subscription-based payment flow ($9.99/month)
+- ✅ Stripe customer management
+- ✅ Test mode support for development and demos
+- ✅ Success/cancel pages after payment
 
 ### Security
 - ✅ Helmet.js for security headers
@@ -61,6 +64,13 @@ A robust RESTful API backend service for managing user subscriptions with automa
 - ✅ MongoDB ObjectId validation
 
 ## 🛠️ Tech Stack
+
+### Frontend
+- **React 19** - Modern UI library
+- **React Router 7** - Client-side routing
+- **Tailwind CSS 4** - Utility-first styling
+- **Axios** - HTTP client for API calls
+- **Vite 7** - Fast build tool and dev server
 
 ### Backend Framework
 - **Node.js** - JavaScript runtime
@@ -219,15 +229,15 @@ SECRET_KEY=your_jwt_secret_key_here
 # Stripe (use test keys: sk_test_...)
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key
 STRIPE_PRICE_ID=price_your_stripe_price_id
-SUCCESS_URL=http://localhost:3000/success
-CANCEL_URL=http://localhost:3000/cancel
+SUCCESS_URL=http://localhost:5173/success
+CANCEL_URL=http://localhost:5173/cancel
 
 # SendGrid
 SENDGRID_API_KEY=SG.your_sendgrid_api_key
 FROM_EMAIL=your_verified_sender@example.com
 
-# Client URL
-CLIENT_URL=http://localhost:3000
+# Client URL (React dev server)
+CLIENT_URL=http://localhost:5173
 ```
 
 ### Getting API Keys
@@ -247,6 +257,40 @@ CLIENT_URL=http://localhost:3000
 - **Password Security**: Bcrypt hashing with 10 salt rounds
 - **JWT Tokens**: 1-hour expiration for security
 - **Authorization Checks**: Users can only access their own data
+
+## 💎 Premium Features
+
+The application includes a complete premium tier implementation with Stripe integration.
+
+### Testing Premium Features
+
+**Stripe Test Mode:**
+- The application uses Stripe test mode for development
+- No real charges will be made during testing
+- Use Stripe test credit cards for demo purposes
+
+**Test Credit Cards:**
+```
+Success: 4242 4242 4242 4242
+Any future expiry date (e.g., 12/34)
+Any 3-digit CVC
+Any billing ZIP code
+```
+
+**Premium Flow:**
+1. Register/login to your account
+2. Click "Upgrade to Premium" button in dashboard
+3. Complete Stripe checkout with test card
+4. Get redirected to success page
+5. See premium badge in dashboard
+6. User status automatically updated to "premium"
+
+**Webhook Testing:**
+- Webhooks automatically update user status when payment succeeds
+- For local development, use Stripe CLI to forward webhooks:
+  ```bash
+  stripe listen --forward-to localhost:5000/api/webhook
+  ```
 
 ## 🧪 Testing
 

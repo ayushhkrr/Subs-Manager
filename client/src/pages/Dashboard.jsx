@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { subscriptionAPI } from '../services/api';
+import { subscriptionAPI, userAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import AddSubscription from '../components/AddSubscription';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [subscriptions, setSubscriptions] = useState([]);
-  const [summary, setSummary] = useState({ totalCost: 0, count: 0 });
+  const [summary, setSummary] = useState({ totalMonthlyCost: 0, totalSubscription: 0 });
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingSub, setEditingSub] = useState(null);
@@ -70,6 +70,18 @@ const Dashboard = () => {
     });
   };
 
+  const handleUpgrade = async () => {
+    try {
+      const response = await userAPI.createPayment();
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      alert('Failed to start checkout. Please try again.');
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -82,9 +94,26 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Welcome, {user?.fullName}!</h1>
-          <p className="text-gray-600 mt-1">Manage all your subscriptions in one place</p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <div className="flex items-center space-x-3">
+              <h1 className="text-3xl font-bold text-gray-900">Welcome, {user?.fullName}!</h1>
+              {user?.subscriptionStatus === 'premium' && (
+                <span className="px-3 py-1 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-sm font-semibold rounded-full shadow-sm">
+                  ⭐ Premium
+                </span>
+              )}
+            </div>
+            <p className="text-gray-600 mt-1">Manage all your subscriptions in one place</p>
+          </div>
+          {user?.subscriptionStatus === 'free' && (
+            <button
+              onClick={handleUpgrade}
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg"
+            >
+              Upgrade to Premium
+            </button>
+          )}
         </div>
 
         {/* Summary Cards */}
@@ -93,7 +122,7 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Total Monthly Cost</p>
-                <p className="text-3xl font-bold text-gray-900">${summary.totalCost?.toFixed(2) || '0.00'}</p>
+                <p className="text-3xl font-bold text-gray-900">${summary.totalMonthlyCost?.toFixed(2) || '0.00'}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                 <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,7 +136,7 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Active Subscriptions</p>
-                <p className="text-3xl font-bold text-gray-900">{summary.count || 0}</p>
+                <p className="text-3xl font-bold text-gray-900">{summary.totalSubscription || 0}</p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                 <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
