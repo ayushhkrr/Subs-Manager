@@ -30,7 +30,7 @@ const Success = () => {
           </p>
 
           {/* Premium Features */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 mb-8 text-left">
+          <div className="bg-linear-to-r from-blue-50 to-purple-50 rounded-lg p-6 mb-8 text-left">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Premium Features:</h2>
             <ul className="space-y-3">
               <li className="flex items-start">
@@ -69,7 +69,7 @@ const Success = () => {
           {/* Badge Display */}
           <div className="mb-6">
             <p className="text-sm text-gray-600 mb-2">Your new status:</p>
-            <span className="inline-block px-6 py-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-lg font-semibold rounded-full shadow-md">
+            <span className="inline-block px-6 py-2 bg-linear-to-r from-yellow-400 to-yellow-600 text-white text-lg font-semibold rounded-full shadow-md">
               ⭐ Premium Member
             </span>
           </div>
